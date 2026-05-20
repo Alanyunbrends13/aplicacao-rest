@@ -27,24 +27,30 @@ public class Usuario_Controller {
         return usuarioRepository.findAll();
     }
 
-    // POST - Adiciona usuário no banco H2
+    // POST - Adiciona usuário no banco
     @PostMapping
-    public Usuario adicionarUsuario(@RequestBody UsuarioRequest request) {
+    public ResponseEntity<?> adicionarUsuario(@RequestBody UsuarioRequest request) {
         Usuario usuario = new Usuario();
         usuario.setNome(request.nome());
         usuario.setRua(request.rua());
         usuario.setIdade(request.idade());
-        return usuarioRepository.save(usuario);
+
+        if(request.idade() == null || request.nome() == null || request.rua() == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO: Há dados faltando na requisição!");
+        }
+
+        return ResponseEntity.ok(usuarioRepository.save(usuario));
     }
 
     //DELETE - Remove usuários
     //id seria o identificador do usuário
-    @DeleteMapping("usuarios/{id}")
+    @DeleteMapping("/{id}")
     public void removeUsuario(@PathVariable Long id){
 
         usuarioRepository.deleteById(id);
     }
 
+    //GET - busca usuários pelo id
     @GetMapping("/{id}")
     public ResponseEntity<?> listaUsuarioEspecifico(@PathVariable Long id){
         if(usuarioRepository.findById(id).isEmpty()){
@@ -55,6 +61,7 @@ public class Usuario_Controller {
         return ResponseEntity.ok(usuarioRepository.findById(id));
     }
 
+    //PUT - altera usuários de acordo com o id no banco
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizaUsuario(@RequestBody UsuarioRequest request, @PathVariable Long id){
         
