@@ -1,5 +1,7 @@
 package com.furb.web2.model_Usuario;
 
+import com.furb.web2.model_Endereco.Endereco;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -11,6 +13,10 @@ public class Usuario {
     private String nome;
     private String rua;
     private String idade;
+
+    @ManyToOne
+    @JoinColumn(name = "id_endereco")
+    private Endereco endereco;
 
     public Usuario() {
     }
@@ -41,5 +47,13 @@ public class Usuario {
 
     public void setIdade(String idade) {
         this.idade = idade;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 }

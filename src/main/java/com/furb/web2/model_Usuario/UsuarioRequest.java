@@ -4,5 +4,4 @@ public record UsuarioRequest(
         String nome,
         String rua,
         String idade
-) {
-}
+) {}
