@@ -4,6 +4,7 @@ import com.furb.web2.model_Endereco.Endereco;
 
 import jakarta.persistence.*;
 
+//deverá ter campo de senha para o CRUD
 @Entity
 public class Usuario {
     @Id
