@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.furb.web2.model_Endereco.Endereco;
+import com.furb.web2.model_Endereco.EnderecoRepository;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -20,6 +24,9 @@ import org.springframework.http.ResponseEntity;
 public class Usuario_Controller {
     @Autowired
     private usuarioRepository usuarioRepository;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     // GET - Retorna todos os usuários
     @GetMapping
@@ -34,9 +41,13 @@ public class Usuario_Controller {
         usuario.setNome(request.nome());
         usuario.setRua(request.rua());
         usuario.setIdade(request.idade());
+        Endereco endereco = enderecoRepository.findById(request.enderecoId()).orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
+        usuario.setEndereco(endereco);
 
-        if(request.idade() == null || request.nome() == null || request.rua() == null){
+        if(request.idade() == null || request.nome() == null || request.rua() == null || request.enderecoId() == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO: Há dados faltando na requisição!");
+        }else if(endereco.equals(null)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO: Endereço não encontrado!");
         }
 
         return ResponseEntity.ok(usuarioRepository.save(usuario));

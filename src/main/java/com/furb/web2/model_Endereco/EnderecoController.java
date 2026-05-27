@@ -15,11 +15,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+//deletar endereço por id
+
 @RestController
 @RequestMapping("/endereco")
 public class EnderecoController {
     @Autowired
     private EnderecoRepository enderecoRepository;
+
+    public EnderecoRepository getEnderecoRepository() {
+        return enderecoRepository;
+    }
 
     @GetMapping
     public List<Endereco> listaEndereco(){
@@ -40,7 +46,7 @@ public class EnderecoController {
         return ResponseEntity.ok(enderecoRepository.save(endereco));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void removeEndereco(@PathVariable Long id){
         enderecoRepository.deleteById(id);
     }
@@ -55,7 +61,7 @@ public class EnderecoController {
     } 
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizaUsuario(@RequestBody Endereco_Request request, @PathVariable Long id){
+    public ResponseEntity<?> atualizaEndereco(@RequestBody Endereco_Request request, @PathVariable Long id){
         
         Optional<Endereco> usuarioOptional = enderecoRepository.findById(id);
 

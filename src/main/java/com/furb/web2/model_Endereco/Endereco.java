@@ -1,9 +1,15 @@
 package com.furb.web2.model_Endereco;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.furb.web2.model_Usuario.Usuario;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Endereco {
@@ -14,11 +20,19 @@ public class Endereco {
     private String logradouro;
     private String bairro;
     private String cidade;
+    @OneToMany(mappedBy = "endereco")
+    private List<Usuario> usuarios;
 
     public Endereco(){}
 
     public Long getId() {
         return id;
+    }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "endereco")
+    public List<Usuario> getUsuarios() {
+        return usuarios;
     }
 
     public String getLogradouro() {
