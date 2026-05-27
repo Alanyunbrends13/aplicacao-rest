@@ -34,6 +34,10 @@ public class EnderecoController {
 
     @PostMapping
     public ResponseEntity<?> adicionaEndereco(@RequestBody Endereco_Request request){
+        if(request.bairro() == null || request.cidade() == null || request.logradouro() == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO: Há dados faltando na requisição!");
+        }
+
         Endereco endereco = new Endereco();
         endereco.setLogradouro(request.logradouro());
         endereco.setBairro(request.bairro());
@@ -47,8 +51,21 @@ public class EnderecoController {
     }
 
     @DeleteMapping("/{id}")
-    public void removeEndereco(@PathVariable Long id){
+    public ResponseEntity<?> removeEndereco(@PathVariable Long id){
+        Optional<Endereco> enderecoOptional = enderecoRepository.findById(id);
+
+        if(enderecoOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERRO: Endereço não encontrado!");
+        }
+
+        Endereco endereco = enderecoOptional.get();
+
+        if(!endereco.getUsuarios().isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO: Há usuários cadastrados neste endereço!");
+        }
+
         enderecoRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Endereço Deletado com Sucesso!");
     }
 
     @GetMapping("/{id}")
