@@ -6,5 +6,6 @@ Junto aos usuários, todos eles poderão ter 1 ou mais equipamentos, assim como 
 Ou também, poderá servir de histórico de utilização de equipamentos, já que a tabela N-N poderá armazenar estes dados
 
 <img width="662" height="480" alt="MER - RestT4" src="https://github.com/user-attachments/assets/e7e17071-12e2-40cd-9647-3a5372c383a8" />
+
 MER - Histórico de Equipamentos
 
