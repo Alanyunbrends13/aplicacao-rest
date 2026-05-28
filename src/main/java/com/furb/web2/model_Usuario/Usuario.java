@@ -12,7 +12,6 @@ public class Usuario {
     private Long id;
 
     private String nome;
-    private String rua;
     private String idade;
 
     @ManyToOne
@@ -30,20 +29,12 @@ public class Usuario {
         return nome;
     }
 
-    public String getRua() {
-        return rua;
-    }
-
     public String getIdade() {
         return idade;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public void setRua(String rua) {
-        this.rua = rua;
     }
 
     public void setIdade(String idade) {

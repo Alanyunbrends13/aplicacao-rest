@@ -39,11 +39,10 @@ public class Usuario_Controller {
     public ResponseEntity<?> adicionarUsuario(@RequestBody UsuarioRequest request) {
         Usuario usuario = new Usuario();
         usuario.setNome(request.nome());
-        usuario.setRua(request.rua());
         usuario.setIdade(request.idade());
         Optional<Endereco> enderecoOptional = enderecoRepository.findById(request.enderecoId());
 
-        if(request.idade() == null || request.nome() == null || request.rua() == null || request.enderecoId() == null){
+        if(request.idade() == null || request.nome() == null ||  request.enderecoId() == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO: Há dados faltando na requisição!");
         }else if(enderecoOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO: Endereço não encontrado!");
@@ -81,7 +80,7 @@ public class Usuario_Controller {
 
         if(usuarioOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERRO: Usuário não encontrado!");
-        }else if(request.idade() == null || request.nome() == null || request.rua() == null || request.enderecoId() == null){
+        }else if(request.idade() == null || request.nome() == null || request.enderecoId() == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO: Há dados faltando na requisição!");
         }
 
@@ -94,7 +93,6 @@ public class Usuario_Controller {
         Usuario usuario = usuarioOptional.get();
         usuario.setNome(request.nome());
         usuario.setIdade(request.idade());
-        usuario.setRua(request.rua());
         usuario.setEndereco(enderecoOptional.get());
         
         return ResponseEntity.ok(usuarioRepository.save(usuario));
