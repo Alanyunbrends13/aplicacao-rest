@@ -15,14 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.furb.web2.model_Endereco.EnderecoRepository;
-import com.furb.web2.model_Usuario.usuarioRepository;
 
 @RestController
 @RequestMapping("/equipamentos")
 public class EquipamentoController {
-    @Autowired
-    private usuarioRepository usuarioRepository;
 
     @Autowired
     private EquipamentoRepository equipamentoRepository;
