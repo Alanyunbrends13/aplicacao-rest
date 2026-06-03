@@ -1,11 +1,17 @@
 package com.furb.web2.model_Equipamento;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.furb.web2.model_Usuario.Usuario;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Equipamento {
@@ -14,7 +20,11 @@ public class Equipamento {
     private Long id;
     
     private String descricao;
-    private Date dtRecebimento;
+    private LocalDate dtRecebimento;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "equipamentos")
+    private List<Usuario> usuarios;
 
     public Long getId() {
         return id;
@@ -28,11 +38,11 @@ public class Equipamento {
         this.descricao = descricao;
     }
 
-    public Date getDtRecebimento() {
+    public LocalDate getDtRecebimento() {
         return dtRecebimento;
     }
 
-    public void setDtRecebimento(Date dtRecebimento) {
+    public void setDtRecebimento(LocalDate dtRecebimento) {
         this.dtRecebimento = dtRecebimento;
     }
 }

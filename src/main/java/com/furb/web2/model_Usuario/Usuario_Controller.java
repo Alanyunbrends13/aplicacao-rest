@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.furb.web2.model_Endereco.Endereco;
 import com.furb.web2.model_Endereco.EnderecoRepository;
+import com.furb.web2.model_Equipamento.Equipamento;
+import com.furb.web2.model_Equipamento.EquipamentoRepository;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,9 @@ public class Usuario_Controller {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    @Autowired
+    private EquipamentoRepository equipamentoRepository;
+
     // GET - Retorna todos os usuários
     @GetMapping
     public List<Usuario> listarUsuarios() {
@@ -40,6 +45,15 @@ public class Usuario_Controller {
         Usuario usuario = new Usuario();
         usuario.setNome(request.nome());
         usuario.setIdade(request.idade());
+
+        List<Equipamento> equipamentos = equipamentoRepository.findAllById(request.equipamentos());
+        usuario.setEquipamentos(equipamentos);
+
+        if(equipamentos.size() != request.equipamentos().size()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERRO: Um ou mais equipamentos não foram encontrados!");
+        }
+
+        //Optional apenas quando procura um único equipamento
         Optional<Endereco> enderecoOptional = enderecoRepository.findById(request.enderecoId());
 
         if(request.idade() == null || request.nome() == null ||  request.enderecoId() == null){
@@ -67,7 +81,6 @@ public class Usuario_Controller {
         if(usuarioRepository.findById(id).isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERRO: Usuário não encontrado!");
         }
-
 
         return ResponseEntity.ok(usuarioRepository.findById(id));
     }
@@ -97,6 +110,19 @@ public class Usuario_Controller {
         
         return ResponseEntity.ok(usuarioRepository.save(usuario));
     }
+
+    @GetMapping("/{id}/equipamentos")
+    public ResponseEntity<?> listaEquipamentosDoUsuario(@PathVariable Long id){
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+
+        if(usuario.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERRO: Usuário não encontrado!");
+        }
+
+        return ResponseEntity.ok(usuario.get().getEquipamentos());
+    }
+
+
     
 
 

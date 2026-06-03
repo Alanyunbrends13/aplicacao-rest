@@ -1,8 +1,8 @@
 package com.furb.web2.model_Equipamento;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public record EquipamentoRequest(
     String descricao,
-    Date dtRecebimento
+    LocalDate dtRecebimento
 ) {}

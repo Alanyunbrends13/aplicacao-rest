@@ -1,3 +1,8 @@
+#FEATURES
+Implementado Tabela N-N entre Usuario e Equipamento
+Endpoints criados para Equipamentos
+Conexão com MariaDB
+
 #FIXES
 Removido campo rua do cadastro do usuário
 
