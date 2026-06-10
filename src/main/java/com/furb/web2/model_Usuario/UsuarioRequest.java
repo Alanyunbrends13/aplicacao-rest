@@ -6,5 +6,6 @@ public record UsuarioRequest(
         String nome,
         String idade,
         Long enderecoId,
-        List<Long> equipamentos
+        List<Long> equipamentos,
+        String senha
 ) {}

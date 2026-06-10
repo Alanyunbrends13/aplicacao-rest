@@ -16,6 +16,7 @@ public class Usuario {
 
     private String nome;
     private String idade;
+    private String senha;
 
     @ManyToOne
     @JoinColumn(name = "id_endereco")
@@ -66,6 +67,14 @@ public class Usuario {
 
     public void setEquipamentos(List<Equipamento> equipamentos) {
         this.equipamentos = equipamentos;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
 
