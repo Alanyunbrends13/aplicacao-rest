@@ -1,4 +1,7 @@
-#FEATURES
+#FEATURES - 10-06-2026
+Adicionado Autenticação de Usuário
+
+#FEATURES - 03-06-2026
 Implementado Tabela N-N entre Usuario e Equipamento
 Endpoints criados para Equipamentos
 Conexão com MariaDB
