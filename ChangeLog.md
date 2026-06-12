@@ -1,3 +1,6 @@
+#Fixes - 11-06-2026
+Ajustado para Pesquisar Usuário no banco para autenticação
+
 #FEATURES - 10-06-2026
 Adicionado Autenticação de Usuário
 

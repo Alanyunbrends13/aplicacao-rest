@@ -1,5 +1,7 @@
 package com.furb.web2.model_Login;
 
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -7,23 +9,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.furb.web2.model_Usuario.Usuario;
+import com.furb.web2.model_Usuario.usuarioRepository;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
     private final JwtService jwtService;
+    private final usuarioRepository uRepository;
 
     //Construtor para instanciar o Serviço do JWT
-    public AuthController(JwtService jwtService){
+    public AuthController(JwtService jwtService, usuarioRepository uRepository){
         this.jwtService = jwtService;
+        this.uRepository = uRepository;
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         System.out.println("ENTROU NO LOGIN");
-        if(!request.usuario().equals("usuario") || !request.senha().equals("admin")){
+
+        Optional<Usuario> usuarioBanco = uRepository.findByNome(request.usuario());
+
+        System.out.println("Usuário encontrado no banco: [" + usuarioBanco.get().getNome() + "]");
+        System.out.println("Senha no banco: [" + usuarioBanco.get().getSenha() + "]");
+        System.out.println("Usuário enviado no request: [" + request.usuario() + "]");
+        System.out.println("Senha enviada no request: [" + request.senha() + "]");
+
+        if(usuarioBanco == null || !usuarioBanco.get().getSenha().equals(request.senha())){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha inválidos");
         }
 
+        /*if(!request.usuario().equals("usuario") || !request.senha().equals("admin")){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha inválidos");
+        }*/
+
+        
         String token = jwtService.gerarToken(request.usuario());
 
         return ResponseEntity.ok(new LoginResponse(token));
