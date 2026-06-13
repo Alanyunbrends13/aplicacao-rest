@@ -46,6 +46,7 @@ public class Usuario_Controller {
         usuario.setNome(request.nome());
         usuario.setIdade(request.idade());
         usuario.setSenha(request.senha());
+        usuario.setLogin(request.login());
 
         List<Equipamento> equipamentos = equipamentoRepository.findAllById(request.equipamentos());
         usuario.setEquipamentos(equipamentos);
@@ -57,7 +58,8 @@ public class Usuario_Controller {
         //Optional apenas quando procura um único equipamento
         Optional<Endereco> enderecoOptional = enderecoRepository.findById(request.enderecoId());
 
-        if(request.idade() == null || request.nome() == null ||  request.enderecoId() == null || request.senha() == null){
+        if(request.idade() == null || request.nome() == null ||  
+        request.enderecoId() == null || request.senha() == null || request.login() == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO: Há dados faltando na requisição!");
         }else if(enderecoOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO: Endereço não encontrado!");
@@ -94,7 +96,8 @@ public class Usuario_Controller {
 
         if(usuarioOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERRO: Usuário não encontrado!");
-        }else if(request.idade() == null || request.nome() == null || request.enderecoId() == null || request.senha() == null){
+        }else if(request.idade() == null || request.nome() == null || request.enderecoId() == null || 
+        request.senha() == null || request.login() == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERRO: Há dados faltando na requisição!");
         }
 
@@ -109,6 +112,7 @@ public class Usuario_Controller {
         usuario.setIdade(request.idade());
         usuario.setEndereco(enderecoOptional.get());
         usuario.setSenha(request.senha());
+        usuario.setLogin(request.login());
         
         return ResponseEntity.ok(usuarioRepository.save(usuario));
     }

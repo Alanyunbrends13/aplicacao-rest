@@ -1,3 +1,6 @@
+#FEATURES - 12-06-2026
+Possibilidade de criar usuários sem autenticação
+
 #Fixes - 11-06-2026
 Ajustado para Pesquisar Usuário no banco para autenticação
 

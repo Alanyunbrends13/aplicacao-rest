@@ -32,9 +32,10 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String path = request.getServletPath();
+        String method = request.getMethod();
 
         // libera login sem token
-        if (path.equals("/auth/login")) {
+        if (path.equals("/auth/login") || (path.equals("/usuarios") && method.equals("POST"))) {
             filterChain.doFilter(request, response);
             return;
         }

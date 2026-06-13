@@ -15,6 +15,7 @@ public class Usuario {
     private Long id;
 
     private String nome;
+    private String login;
     private String idade;
     private String senha;
 
@@ -77,5 +78,12 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
 }
