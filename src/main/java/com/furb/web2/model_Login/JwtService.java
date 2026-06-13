@@ -20,10 +20,10 @@ public class JwtService {
     private final SecretKey key =
             Keys.hmacShaKeyFor(SECRET.getBytes());
 
-    public String gerarToken(String usuario) {
+    public String gerarToken(String login) {
 
         return Jwts.builder()
-                .subject(usuario)
+                .subject(login)
                 .issuedAt(new Date())
                 .expiration(
                         new Date(

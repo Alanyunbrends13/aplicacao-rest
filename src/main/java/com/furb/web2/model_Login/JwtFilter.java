@@ -60,12 +60,12 @@ public class JwtFilter extends OncePerRequestFilter {
             String token =
                     authHeader.substring(7);
 
-            String usuario =
+            String login =
                     jwtService.validarToken(token);
 
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
-                            usuario,
+                            login,
                             null,
                             Collections.emptyList());
 

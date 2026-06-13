@@ -20,6 +20,7 @@ import com.furb.web2.model_Equipamento.EquipamentoRepository;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -33,6 +34,12 @@ public class Usuario_Controller {
     @Autowired
     private EquipamentoRepository equipamentoRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
+    public Usuario_Controller(PasswordEncoder passwordEncoder){
+        this.passwordEncoder = passwordEncoder;
+    }
+
     // GET - Retorna todos os usuários
     @GetMapping
     public List<Usuario> listarUsuarios() {
@@ -45,7 +52,7 @@ public class Usuario_Controller {
         Usuario usuario = new Usuario();
         usuario.setNome(request.nome());
         usuario.setIdade(request.idade());
-        usuario.setSenha(request.senha());
+        usuario.setSenha(passwordEncoder.encode(request.senha())); //criptografa senha
         usuario.setLogin(request.login());
 
         List<Equipamento> equipamentos = equipamentoRepository.findAllById(request.equipamentos());
@@ -111,7 +118,7 @@ public class Usuario_Controller {
         usuario.setNome(request.nome());
         usuario.setIdade(request.idade());
         usuario.setEndereco(enderecoOptional.get());
-        usuario.setSenha(request.senha());
+        usuario.setSenha(passwordEncoder.encode(request.senha())); //criptografa senha
         usuario.setLogin(request.login());
         
         return ResponseEntity.ok(usuarioRepository.save(usuario));

@@ -1,3 +1,9 @@
+#Fixes
+Buscar por login ao invés de usuário
+
+#FFEATURES - 13-06-2026
+Senha no banco criptografada
+
 #FEATURES - 12-06-2026
 Possibilidade de criar usuários sem autenticação
 
